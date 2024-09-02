@@ -1,0 +1,428 @@
+{
+    "name": "git-oak",
+    "displayName": "Git Oak",
+    "description": "",
+    "version": "1.16.0",
+    "author": {
+        "name": "Cameology",
+        "url": "https://github.com/cameology"
+    },
+    "contributors": [
+        {
+            "name": "Rheza A",
+            "url": "https://github.com/rhezaas"
+        }
+    ],
+    "publisher": "Rheza A",
+    "license": "MIT",
+    "icon": "resources/logo.png",
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "git",
+        "diff",
+        "tree",
+        "compare",
+        "branch"
+    ],
+    "engines": {
+        "vscode": "^1.81.0"
+    },
+    "capabilities": {
+        "virtualWorkspaces": false,
+        "untrustedWorkspaces": {
+            "supported": true
+        }
+    },
+    "extensionDependencies": [
+        "vscode.git"
+    ],
+    "main": "./dist/extension",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "gitoak",
+                    "icon": "./resources/logo.svg",
+                    "title": "Git Oak"
+                }
+            ]
+        },
+        "views": {
+            "gitoak": [
+                {
+                    "id": "gitoak",
+                    "name": "Git Oak",
+                    "when": "config.git.enabled && gitOpenRepositoryCount != 0",
+                    "icon": "./resources/logo.svg"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "gitoak.changeRepository",
+                "title": "Change Repository...",
+                "icon": "$(repo)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.openChanges",
+                "title": "Open Changes",
+                "icon": "$(git-compare)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.openFile",
+                "title": "Open File",
+                "icon": "$(go-to-file)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.discardChanges",
+                "title": "Discard Changes",
+                "icon": "$(discard)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.discardAllChanges",
+                "title": "Discard All Changes",
+                "icon": "$(discard)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.openAllChanges",
+                "title": "Open All Changes",
+                "icon": "$(git-compare)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.openChangedFiles",
+                "title": "Open Changed Files",
+                "icon": "$(go-to-file)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.changeBase",
+                "title": "Change Base...",
+                "icon": "$(git-branch)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.refresh",
+                "title": "Refresh",
+                "icon": "$(refresh)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.switchToFullDiff",
+                "title": "Switch to Full Diff",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.switchToMergeDiff",
+                "title": "Switch to Merge Diff",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.showCheckboxes",
+                "title": "Show checkboxes",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.hideCheckboxes",
+                "title": "Hide checkboxes",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.viewAsList",
+                "title": "View as List",
+                "icon": "$(list-flat)",
+                "category": "Git Oak"
+            },
+            {
+                "command": "gitoak.viewAsTree",
+                "title": "View as Tree",
+                "icon": "$(list-tree)",
+                "category": "Git Oak"
+            }
+        ],
+        "menus": {
+            "view/title": [
+                {
+                    "command": "gitoak.changeRepository",
+                    "when": "view == gitoak && gitOpenRepositoryCount != 1",
+                    "group": "1_state"
+                },
+                {
+                    "command": "gitoak.changeRepository",
+                    "when": "view == gitoak && gitOpenRepositoryCount != 1",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "gitoak.changeBase",
+                    "when": "view == gitoak",
+                    "group": "1_state"
+                },
+                {
+                    "command": "gitoak.openAllChanges",
+                    "when": "view == gitoak",
+                    "group": "2_files"
+                },
+                {
+                    "command": "gitoak.openChangedFiles",
+                    "when": "view == gitoak",
+                    "group": "2_files"
+                },
+                {
+                    "command": "gitoak.discardAllChanges",
+                    "when": "view == gitoak",
+                    "group": "2_files"
+                },
+                {
+                    "command": "gitoak.refresh",
+                    "when": "view == gitoak",
+                    "group": "1_state"
+                },
+                {
+                    "command": "gitoak.refresh",
+                    "when": "view == gitoak",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "gitoak.switchToFullDiff",
+                    "when": "view == gitoak && config.gitoak.diffMode == merge",
+                    "group": "3_options"
+                },
+                {
+                    "command": "gitoak.switchToMergeDiff",
+                    "when": "view == gitoak && config.gitoak.diffMode == full",
+                    "group": "3_options"
+                },
+                {
+                    "command": "gitoak.showCheckboxes",
+                    "when": "view == gitoak && !config.gitoak.showCheckboxes",
+                    "group": "3_options"
+                },
+                {
+                    "command": "gitoak.hideCheckboxes",
+                    "when": "view == gitoak && config.gitoak.showCheckboxes",
+                    "group": "3_options"
+                },
+                {
+                    "command": "gitoak.viewAsList",
+                    "when": "view == gitoak && !gitoak.viewAsList",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "gitoak.viewAsTree",
+                    "when": "view == gitoak && gitoak.viewAsList",
+                    "group": "navigation@1"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "gitoak.openChanges",
+                    "when": "view == gitoak && viewItem == file && !config.gitoak.openChanges",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openFile",
+                    "when": "view == gitoak && viewItem == file && config.gitoak.openChanges",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.discardChanges",
+                    "when": "view == gitoak && viewItem == file",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.discardChanges",
+                    "when": "view == gitoak && viewItem == folder",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.discardAllChanges",
+                    "when": "view == gitoak && viewItem == ref",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openChanges",
+                    "when": "view == gitoak && viewItem == file && !config.gitoak.openChanges"
+                },
+                {
+                    "command": "gitoak.openFile",
+                    "when": "view == gitoak && viewItem == file && config.gitoak.openChanges"
+                },
+                {
+                    "command": "gitoak.discardChanges",
+                    "when": "view == gitoak && viewItem == file"
+                },
+                {
+                    "command": "gitoak.discardChanges",
+                    "when": "view == gitoak && viewItem == folder"
+                },
+                {
+                    "command": "gitoak.discardAllChanges",
+                    "when": "view == gitoak && viewItem == ref"
+                },
+                {
+                    "command": "gitoak.changeRepository",
+                    "when": "view == gitoak && viewItem == ref && gitOpenRepositoryCount != 1"
+                },
+                {
+                    "command": "gitoak.changeBase",
+                    "when": "view == gitoak && viewItem == ref"
+                },
+                {
+                    "command": "gitoak.changeBase",
+                    "when": "view == gitoak && viewItem == ref",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openAllChanges",
+                    "when": "view == gitoak && viewItem == ref"
+                },
+                {
+                    "command": "gitoak.openAllChanges",
+                    "when": "view == gitoak && viewItem == folder"
+                },
+                {
+                    "command": "gitoak.openChangedFiles",
+                    "when": "view == gitoak && viewItem == ref"
+                },
+                {
+                    "command": "gitoak.openChangedFiles",
+                    "when": "view == gitoak && viewItem == folder"
+                },
+                {
+                    "command": "gitoak.openAllChanges",
+                    "when": "view == gitoak && viewItem == ref",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openAllChanges",
+                    "when": "view == gitoak && viewItem == folder",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openChangedFiles",
+                    "when": "view == gitoak && viewItem == ref",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.openChangedFiles",
+                    "when": "view == gitoak && viewItem == folder",
+                    "group": "inline"
+                },
+                {
+                    "command": "gitoak.switchToFullDiff",
+                    "when": "view == gitoak && viewItem == ref && config.gitoak.diffMode == merge"
+                },
+                {
+                    "command": "gitoak.switchToMergeDiff",
+                    "when": "view == gitoak && viewItem == ref && config.gitoak.diffMode == full"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Git Oak",
+            "properties": {
+                "gitoak.autoChangeRepository": {
+                    "type": "boolean",
+                    "description": "[EXPERIMENTAL] Whether to change the active repository whenever a different one is selected in the SCM view. Note that this only works well when not selecting multiple repositories. See GitHub issue #70 for more details.",
+                    "default": false
+                },
+                "gitoak.autoRefresh": {
+                    "type": "boolean",
+                    "description": "Whether to refresh the tree whenever a file in the workspace changes.",
+                    "default": true
+                },
+                "gitoak.refreshIndex": {
+                    "type": "boolean",
+                    "description": "Whether to refresh the git index each time the tree is refreshed. This avoids superfluous diff entries for cases when only the file modification date is changed, at the cost of an extra git invocation.",
+                    "default": true
+                },
+                "gitoak.findRenames": {
+                    "type": "boolean",
+                    "description": "Whether to detect renames. Does not affect untracked files. May have a performance impact.",
+                    "default": true
+                },
+                "gitoak.openChanges": {
+                    "type": "boolean",
+                    "description": "When selecting a modified file in the tree, whether to show its changes or just open the workspace file.",
+                    "default": true
+                },
+                "gitoak.root": {
+                    "type": "string",
+                    "enum": [
+                        "workspace",
+                        "repository"
+                    ],
+                    "description": "The root of the tree when the workspace folder is not the same as the repository root.",
+                    "default": "workspace"
+                },
+                "gitoak.includeFilesOutsideWorkspaceRoot": {
+                    "type": "boolean",
+                    "description": "If gitoak.root is \"workspace\", whether to display files which are within the repository but outside the workspace folder in a special \"/\" folder.",
+                    "default": true
+                },
+                "gitoak.diffMode": {
+                    "type": "string",
+                    "enum": [
+                        "merge",
+                        "full"
+                    ],
+                    "description": "Whether to compare against the selected base ref directly (full mode) or by computing a merge base first (merge mode).",
+                    "default": "merge"
+                },
+                "gitoak.iconsMinimal": {
+                    "type": "boolean",
+                    "description": "Whether to use a compact icon alignment (like Seti file icon theme) where only files have icons.",
+                    "default": false
+                },
+                "gitoak.collapsed": {
+                    "type": "boolean",
+                    "description": "Whether to show folders collapsed instead of expanded. NOTE: A restart is required when changing this setting.",
+                    "default": false
+                },
+                "gitoak.compactFolders": {
+                    "type": "boolean",
+                    "description": "Whether to compact (flatten) single-child folders into a single tree element. Useful for Java package structures, for example. May have a performance impact for large diff trees.",
+                    "default": true
+                },
+                "gitoak.showCheckboxes": {
+                    "type": "boolean",
+                    "description": "Whether to show checkboxes such that files or folders can be ticked off, for example when reviewing.",
+                    "default": false
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "webpack --mode production",
+        "compile": "webpack --mode none",
+        "watch": "webpack --mode none --watch --env development",
+        "test-compile": "tsc -p ./"
+    },
+    "devDependencies": {
+        "@types/byline": "4.2.31",
+        "@types/file-type": "^5.2.1",
+        "@types/node": "^13.5.0",
+        "@types/vscode": "^1.81.0",
+        "@types/which": "^1.0.28",
+        "@vscode/vsce": "^2.20.1",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.4.3",
+        "webpack": "^5.44.0",
+        "webpack-cli": "^4.2.0"
+    },
+    "dependencies": {
+        "@vscode/iconv-lite-umd": "0.7.0",
+        "byline": "^5.0.0",
+        "file-type": "^7.2.0",
+        "jschardet": "3.0.0",
+        "vscode-nls": "^4.0.0",
+        "which": "^1.3.0"
+    }
+}
