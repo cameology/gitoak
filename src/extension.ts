@@ -17,111 +17,111 @@ import { GitTreeCompareProvider } from "./treeProvider"
 
 
 export function activate(context: ExtensionContext) {
-    const disposables: Disposable[] = [];
-    context.subscriptions.push(new Disposable(() => Disposable.from(...disposables).dispose()));
+    const disposables: Disposable[] = []
+    context.subscriptions.push(new Disposable(() => Disposable.from(...disposables).dispose()))
 
-    const outputChannel = window.createOutputChannel('Git Oak');
-    disposables.push(outputChannel);
+    const outputChannel = window.createOutputChannel("Git Oak")
+    disposables.push(outputChannel)
 
-    const gitExt = extensions.getExtension<GitExtension>('vscode.git')!.exports;
-    const gitApi = gitExt.getAPI(1);
+    const gitExt = extensions.getExtension<GitExtension>("vscode.git")!.exports
+    const gitApi = gitExt.getAPI(1)
 
-    let provider: GitTreeCompareProvider | null = null;
+    let provider: GitTreeCompareProvider | null = null
 
     let runAfterInit = (fn: () => any) => {
         if (provider == null) {
-            setTimeout(() => runAfterInit(fn), 100);
+            setTimeout(() => runAfterInit(fn), 100)
         } else {
-            fn();
+            fn()
         }
     }
 
-    commands.registerCommand(NAMESPACE + '.openChanges', node => {
+    commands.registerCommand(NAMESPACE + ".openChanges", node => {
         runAfterInit(() => {
-            provider!.openChanges(node);
-        });
-    });
+            provider!.openChanges(node)
+        })
+    })
 
-    commands.registerCommand(NAMESPACE + '.openFile', node => {
+    commands.registerCommand(NAMESPACE + ".openFile", node => {
         runAfterInit(() => {
-            provider!.openFile(node);
-        });
-    });
+            provider!.openFile(node)
+        })
+    })
     
-    commands.registerCommand(NAMESPACE + '.discardChanges', node => {
+    commands.registerCommand(NAMESPACE + ".discardChanges", node => {
         runAfterInit(() => {
-            provider!.discardChanges(node);
-        });
-    });
+            provider!.discardChanges(node)
+        })
+    })
     
-    commands.registerCommand(NAMESPACE + '.discardAllChanges', () => {
+    commands.registerCommand(NAMESPACE + ".discardAllChanges", () => {
         runAfterInit(() => {
-            provider!.discardAllChanges();
-        });
-    });
+            provider!.discardAllChanges()
+        })
+    })
 
-    commands.registerCommand(NAMESPACE + '.changeRepository', () => {
+    commands.registerCommand(NAMESPACE + ".changeRepository", () => {
         runAfterInit(() => {
-            provider!.promptChangeRepository();
-        });
-    });
+            provider!.promptChangeRepository()
+        })
+    })
 
-    commands.registerCommand(NAMESPACE + '.changeBase', () => {
+    commands.registerCommand(NAMESPACE + ".changeBase", () => {
         runAfterInit(() => {
-            provider!.promptChangeBase();
-        });
-    });
+            provider!.promptChangeBase()
+        })
+    })
 
-    commands.registerCommand(NAMESPACE + '.refresh', () => {
+    commands.registerCommand(NAMESPACE + ".refresh", () => {
         runAfterInit(() => {
-            provider!.manualRefresh();
-        });
-    });
+            provider!.manualRefresh()
+        })
+    })
 
-    commands.registerCommand(NAMESPACE + '.openAllChanges', node => {
-        runAfterInit(() => provider!.openAllChanges(node));
-    });
+    commands.registerCommand(NAMESPACE + ".openAllChanges", node => {
+        runAfterInit(() => provider!.openAllChanges(node))
+    })
 
-    commands.registerCommand(NAMESPACE + '.openChangedFiles', node => {
-        runAfterInit(() => provider!.openChangedFiles(node));
-    });
+    commands.registerCommand(NAMESPACE + ".openChangedFiles", node => {
+        runAfterInit(() => provider!.openChangedFiles(node))
+    })
 
-    commands.registerCommand(NAMESPACE + '.switchToFullDiff', () => {
-        runAfterInit(() => provider!.switchToFullDiff());
-    });
+    commands.registerCommand(NAMESPACE + ".switchToFullDiff", () => {
+        runAfterInit(() => provider!.switchToFullDiff())
+    })
 
-    commands.registerCommand(NAMESPACE + '.switchToMergeDiff', () => {
-        runAfterInit(() => provider!.switchToMergeDiff());
-    });
+    commands.registerCommand(NAMESPACE + ".switchToMergeDiff", () => {
+        runAfterInit(() => provider!.switchToMergeDiff())
+    })
 
-    commands.registerCommand(NAMESPACE + '.showCheckboxes', () => {
-        runAfterInit(() => provider!.hideCheckboxes(false));
-    });
+    commands.registerCommand(NAMESPACE + ".showCheckboxes", () => {
+        runAfterInit(() => provider!.hideCheckboxes(false))
+    })
 
-    commands.registerCommand(NAMESPACE + '.hideCheckboxes', () => {
-        runAfterInit(() => provider!.hideCheckboxes(true));
-    });
+    commands.registerCommand(NAMESPACE + ".hideCheckboxes", () => {
+        runAfterInit(() => provider!.hideCheckboxes(true))
+    })
 
-    commands.registerCommand(NAMESPACE + '.viewAsList', () => {
-        runAfterInit(() => provider!.viewAsTree(false));
-    });
+    commands.registerCommand(NAMESPACE + ".viewAsList", () => {
+        runAfterInit(() => provider!.viewAsTree(false))
+    })
 
-    commands.registerCommand(NAMESPACE + '.viewAsTree', () => {
-        runAfterInit(() => provider!.viewAsTree(true));
-    });
+    commands.registerCommand(NAMESPACE + ".viewAsTree", () => {
+        runAfterInit(() => provider!.viewAsTree(true))
+    })
 
     createGit(gitApi, outputChannel).then(async git => {
-        const onOutput = (str: string) => outputChannel.append(str);
-        git.onOutput.addListener('log', onOutput);
-        disposables.push(toDisposable(() => git.onOutput.removeListener('log', onOutput)));
+        const onOutput = (str: string) => outputChannel.append(str)
+        git.onOutput.addListener("log", onOutput)
+        disposables.push(toDisposable(() => git.onOutput.removeListener("log", onOutput)))
 
-        provider = new GitTreeCompareProvider(git, gitApi, outputChannel, context.globalState, context.asAbsolutePath);
+        provider = new GitTreeCompareProvider(git, gitApi, outputChannel, context.globalState, context.asAbsolutePath)
 
         const treeView = window.createTreeView(
             NAMESPACE,
             {treeDataProvider: provider}
-        );
+        )
 
-        provider.init(treeView);
-    });
+        provider.init(treeView)
+    })
 }

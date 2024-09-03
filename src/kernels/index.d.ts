@@ -1,4 +1,4 @@
-export type StatusCode = 'A' | 'D' | 'M' | 'C' | 'U' | 'T' | 'R'
+export type StatusCode = "A" | "D" | "M" | "C" | "U" | "T" | "R"
 
 export interface DiffStatusInterface {
     /**

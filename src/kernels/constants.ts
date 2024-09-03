@@ -1,8 +1,8 @@
 export const NAMESPACE = "gitoak"
 
-export const MODE_REGULAR_FILE = '100644'
-export const MODE_EMPTY = '000000'
-export const MODE_SUBMODULE = '160000'
+export const MODE_REGULAR_FILE = "100644"
+export const MODE_EMPTY = "000000"
+export const MODE_SUBMODULE = "160000"
 
 // https://git-scm.com/docs/git-diff-index#_raw_output_format
 export const MODE_LEN = 6
